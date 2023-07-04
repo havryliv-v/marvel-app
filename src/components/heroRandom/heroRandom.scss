@@ -1,0 +1,77 @@
+@import '../../style/variables.scss';
+
+.randomhero {
+   display: flex;
+
+   &__block,
+   &__static {
+      display: flex;
+      width: 550px;
+      height: 260px;
+      padding: 40px 35px;
+      box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.25);
+   }
+
+   &__block {
+      justify-content: space-between;
+
+      .button:first-child {
+         margin-right: 30px;
+      }
+   }
+
+   &__info {
+      width: 265px
+   }
+
+   &__static {
+      position: relative;
+      flex-direction: column;
+      background-color: $dark;
+      color: #FFF;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+
+
+   }
+
+   &__img {
+      width: 180px;
+      height: 180px;
+   }
+
+   &__name {
+      font-size: 22px;
+      font-weight: 700;
+   }
+
+   &__text {
+      font-size: 14px;
+      font-weight: 400;
+      margin-top: 10px;
+      line-height: 18px;
+
+   }
+
+   &__decor {
+      position: absolute;
+      right: -36px;
+      bottom: 14px;
+      width: 202.536px;
+      height: 189px;
+   }
+
+   &__title {
+      letter-spacing: -0.045em;
+
+      &:nth-child(2) {
+         margin-top: 33px;
+         margin-bottom: 13px;
+      }
+   }
+
+   &__btns {
+      margin-top: 13px;
+   }
+}
