@@ -1,0 +1,40 @@
+.selector {
+   width: 425px;
+   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+   padding: 25px;
+   margin-top: 51px;
+
+   &__title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+   }
+
+   &__body {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+   }
+
+   &__circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      background: #C4C4C4;
+      margin: 30px 9px 0 0;
+   }
+
+   &__mini {
+      width: 326px;
+      height: 16px;
+      background: #C4C4C4;
+      margin-top: 30px;
+   }
+
+   &__block {
+      width: 375px;
+      height: 35px;
+      background: #C4C4C4;
+      margin-top: 15px;
+   }
+}

@@ -1,0 +1,21 @@
+@import '../../style/variables.scss';
+
+.banner {
+   height: 100px;
+   background-color: $dark;
+   display: flex;
+   align-items: center;
+   padding: 0 25px 0 45px;
+   width: 100%;
+
+   &__text {
+      color: #FFF;
+      font-size: 24px;
+      font-weight: 700;
+      margin-left: 83px;
+   }
+
+   &__logo {
+      margin-left: auto;
+   }
+}

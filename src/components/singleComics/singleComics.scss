@@ -1,0 +1,45 @@
+@import '../../style/variables.scss';
+
+.single {
+   margin-top: 50px;
+   display: flex;
+
+
+   &__img {
+      width: 293px;
+      height: 450px;
+   }
+
+   &__block {
+      width: 550px;
+      margin-left: 50px;
+   }
+
+   &__title {
+      font-size: 22px;
+      font-weight: 700;
+   }
+
+
+   &__descr,
+   &__pages,
+   &__language,
+   &__price {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: 400;
+   }
+
+   &__price {
+      color: $main-color;
+      font-size: 24px;
+      font-weight: 700;
+   }
+
+   &__back {
+      margin-left: auto;
+      font-size: 18px;
+      font-weight: 700;
+      align-self: flex-start;
+   }
+}
