@@ -21,7 +21,9 @@
    }
 
    &__info {
-      width: 265px
+      width: 265px;
+      display: flex;
+      flex-direction: column;
    }
 
    &__static {
@@ -51,6 +53,7 @@
       font-weight: 400;
       margin-top: 10px;
       line-height: 18px;
+      height: 30px;
 
    }
 
@@ -72,6 +75,6 @@
    }
 
    &__btns {
-      margin-top: 13px;
+      margin-top: auto;
    }
 }
