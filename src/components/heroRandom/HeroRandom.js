@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MarvelService from '../../services/MarvelService';
 
@@ -10,76 +10,71 @@ import './heroRandom.scss';
 
 
 
-class HeroRandom extends Component {
+const HeroRandom = () => {
+   const [hero, setHero] = useState(null);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState(false);
 
-   state = {
-      hero: {},
-      loading: true,
-      error: false
+
+
+   const marvelService = new MarvelService();
+
+   useEffect(() => {
+      updateHero();
+      const timerId = setInterval(updateHero, 60000);
+      return () => {
+         clearInterval(timerId)
+      }
+   }, [])
+
+   const onError = () => {
+      setLoading(false);
+      setError(true)
+
    }
 
-   marvelService = new MarvelService();
-
-
-   componentDidMount() {
-      this.updateHero();
+   const onHeroloaded = (hero) => {
+      setHero(hero)
+      setLoading(false)
+      setError(false)
    }
 
-   componentWillUnmount() {
-   }
-
-   onError = () => {
-      this.setState({
-         loading: false,
-         error: true
-      })
-   }
-
-   onHeroloaded = (hero) => {
-      this.setState({ hero, loading: false, error: false })
-   }
-
-   onHeroLoading = () => {
-      this.setState({
-         loading: true,
-         error: false
-      })
+   const onHeroLoading = () => {
+      setLoading(true)
+      setError(false)
    }
 
 
-   updateHero = () => {
+
+   const updateHero = () => {
       const id = Math.floor(Math.random() * (1011334 - 1009742) + 1009742);
-      this.onHeroLoading()
-      this.marvelService
-         .getHero(id).then(this.onHeroloaded).catch(this.onError)
+      onHeroLoading()
+      marvelService
+         .getHero(id).then(onHeroloaded).catch(onError)
    }
 
+   const errorMessage = error ? <ErrorMessage /> : null;
+   const spinner = loading ? <Spinner /> : null;
+   const content = !(loading || error) ? <View hero={hero} /> : null;
 
-   render() {
-      const { hero, loading, error } = this.state;
-      const errorMessage = error ? <ErrorMessage /> : null;
-      const spinner = loading ? <Spinner /> : null;
-      const content = !(loading || error) ? <View hero={hero} /> : null;
+   return (
+      <div className='randomhero'>
+         {errorMessage}
+         {spinner}
+         {content}
+         <div className="randomhero__static">
+            <p className="randomhero__title">Random character for today! <br />
+               Do you want to get to know him better?</p>
+            <p className="randomhero__title">Or choose another one
+            </p>
+            <button className="button button__main" onClick={updateHero}>
+               <div className="inner" >try it</div>
+            </button>
+            <img src={mjolnir} alt="hero-img" className="randomhero__decor" />
 
-      return (
-         <div className='randomhero'>
-            {errorMessage}
-            {spinner}
-            {content}
-            <div className="randomhero__static">
-               <p className="randomhero__title">Random character for today! <br />
-                  Do you want to get to know him better?</p>
-               <p className="randomhero__title">Or choose another one
-               </p>
-               <button className="button button__main" onClick={this.updateHero}>
-                  <div className="inner" >try it</div>
-               </button>
-               <img src={mjolnir} alt="hero-img" className="randomhero__decor" />
-
-            </div>
          </div>
-      )
-   }
+      </div>
+   )
 }
 
 const View = ({ hero }) => {

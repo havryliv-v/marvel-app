@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import MarvelService from '../../services/MarvelService';
 
 import Spinner from '../spinner/Spinner';
@@ -7,76 +7,68 @@ import Selector from '../selector/Selector';
 
 import './heroInfo.scss';
 
-class HeroInfo extends Component {
-   state = {
-      hero: null,
-      loading: false,
-      error: false
-   }
+const HeroInfo = (props) => {
 
-   marvelService = new MarvelService();
+   const [hero, setHero] = useState(null);
+   const [loading, setLoading] = useState(false);
+   const [error, setError] = useState(false);
 
-   componentDidMount() {
-      this.updateHero();
-   }
 
-   componentDidUpdate(prevProps) {
-      if (this.props.heroId !== prevProps.heroId) {
-         this.updateHero();
-      }
-   }
+   const marvelService = new MarvelService();
 
-   updateHero = () => {
-      const { heroId } = this.props;
+   useEffect(() => {
+      updateHero();
+   }, [props.heroId])
+
+
+
+   const updateHero = () => {
+      const { heroId } = props;
       if (!heroId) {
          return;
       }
 
-      this.onHeroLoading();
+      onHeroLoading();
 
-      this.marvelService
+      marvelService
          .getHero(heroId)
-         .then(this.onHeroloaded)
-         .catch(this.onError);
+         .then(onHeroloaded)
+         .catch(onError);
 
    }
 
-   onError = () => {
-      this.setState({
-         loading: false,
-         error: true
-      })
+   const onError = () => {
+      setLoading(false);
+      setError(true);
+
+   }
+   const onHeroloaded = (hero) => {
+      setHero(hero)
+      setLoading(false)
+      setError(false)
    }
 
-   onHeroloaded = (hero) => {
-      this.setState({ hero, loading: false, error: false })
-   }
-
-   onHeroLoading = () => {
-      this.setState({
-         loading: true,
-         error: false
-      })
+   const onHeroLoading = () => {
+      setLoading(true)
+      setError(false)
    }
 
 
 
-   render() {
-      const { hero, loading, error } = this.state;
 
-      const selector = hero || loading || error ? null : <Selector />
-      const errorMessage = error ? <ErrorMessage /> : null;
-      const spinner = loading ? <Spinner /> : null;
-      const content = !(loading || error || !hero) ? <View hero={hero} /> : null;
-      return (
-         <div className="hero__info">
-            {selector}
-            {errorMessage}
-            {spinner}
-            {content}
-         </div>
-      )
-   }
+
+   const selector = hero || loading || error ? null : <Selector />
+   const errorMessage = error ? <ErrorMessage /> : null;
+   const spinner = loading ? <Spinner /> : null;
+   const content = !(loading || error || !hero) ? <View hero={hero} /> : null;
+   return (
+      <div className="hero__info">
+         {selector}
+         {errorMessage}
+         {spinner}
+         {content}
+      </div>
+   )
 }
 
 const View = ({ hero }) => {
@@ -112,5 +104,8 @@ const View = ({ hero }) => {
 
    )
 }
+
+
+
 
 export default HeroInfo;

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 
 
 // import AppBanner from "../appBanner/AppBanner";
@@ -13,41 +13,75 @@ import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 import decoration from '../../resources/img/vision.png';
 
-class App extends Component {
-   state = {
-      selectedHero: null
-   }
+const App = () => {
+   const [selectedHero, setHero] = useState(null);
 
-   onHeroSelected = (id) => {
-      this.setState({
-         selectedHero: id
-      })
+
+
+   const onHeroSelected = (id) => {
+      setHero(id);
    }
-   render() {
-      return (
-         <div className="app" >
-            <AppHeader />
-            <main>
+   return (
+      <div className="app" >
+         <AppHeader />
+         <main>
+            <ErrorBoundary>
+               <HeroRandom />
+            </ErrorBoundary>
+            {/* <AppBanner /> */}
+            <div className="hero__content">
                <ErrorBoundary>
-                  <HeroRandom />
+                  <HeroList onHeroSelected={onHeroSelected} />
                </ErrorBoundary>
-               {/* <AppBanner /> */}
-               <div className="hero__content">
-                  <ErrorBoundary>
-                     <HeroList onHeroSelected={this.onHeroSelected} />
-                  </ErrorBoundary>
-                  <ErrorBoundary>
-                     <HeroInfo heroId={this.state.selectedHero} />
-                  </ErrorBoundary>
-                  {/* <Selector /> */}
-                  {/* <ComicsList /> */}
-                  {/* <SingleComics /> */}
-               </div>
-               <img className="bg-decoration" src={decoration} alt="vision" />
-            </main>
-         </div>
-      )
-   }
+               <ErrorBoundary>
+                  <HeroInfo heroId={selectedHero} />
+               </ErrorBoundary>
+               {/* <Selector /> */}
+               {/* <ComicsList /> */}
+               {/* <SingleComics /> */}
+            </div>
+            <img className="bg-decoration" src={decoration} alt="vision" />
+         </main>
+      </div>
+   )
 }
 
 export default App;
+
+
+
+
+
+   // componentDidMount() {
+   //    // window.addEventListener('scroll', this.handleScroll)
+   //    if (localStorage.getItem('heroLimit')) {
+   //       let heroLimit = JSON.parse(localStorage.getItem('heroLimit'))
+   //       this.onRequest(this.state.offset, heroLimit)
+   //       this.setState({
+   //          offset: (this.state.offset - this.state.limit) + heroLimit,
+   //          limit: heroLimit
+   //       })
+   //    }
+   //    else {
+   //       this.onRequest();
+   //    }
+
+
+   // }
+
+   // handleScroll = () => {
+   //    if (this.state.newItemLoading) return
+   //    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+   //       this.onRequest(this.state.offset)
+   //    }
+   //    if (this.state.charEnded)
+   //       window.removeEventListener("scroll", this.onScroll);
+   // }
+
+   // componentWillUnmount() {
+   //    window.removeEventListener('scroll', this.handleScroll);
+   // }
+
+
+
+         // localStorage.setItem('heroLimit', JSON.stringify(limit))
