@@ -3,7 +3,7 @@ import { useState } from "react";
 
 // import AppBanner from "../appBanner/AppBanner";
 import AppHeader from "../appHeader/AppHeader";
-// import ComicsList from "../comicsList/ComicsList";
+import ComicsList from "../comicsList/ComicsList";
 // import SingleComics from "../singleComics/SingleComics";
 import HeroInfo from '../heroInfo/HeroInfo';
 import HeroList from '../heroList/HeroList';
@@ -30,17 +30,17 @@ const App = () => {
             </ErrorBoundary>
             {/* <AppBanner /> */}
             <div className="hero__content">
-               <ErrorBoundary>
-                  <HeroList onHeroSelected={onHeroSelected} />
-               </ErrorBoundary>
+
+               {/* <HeroList onHeroSelected={onHeroSelected} />
+
                <ErrorBoundary>
                   <HeroInfo heroId={selectedHero} />
-               </ErrorBoundary>
+               </ErrorBoundary> */}
                {/* <Selector /> */}
-               {/* <ComicsList /> */}
+               <ComicsList />
                {/* <SingleComics /> */}
             </div>
-            <img className="bg-decoration" src={decoration} alt="vision" />
+            {/* <img className="bg-decoration" src={decoration} alt="vision" /> */}
          </main>
       </div>
    )
@@ -64,7 +64,7 @@ export default App;
    //    }
    //    else {
    //       this.onRequest();
-   //    }
+   //    } 
 
 
    // }

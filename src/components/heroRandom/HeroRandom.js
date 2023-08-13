@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 
 import mjolnir from '../../resources/img/mjolnir.png';
 import Spinner from '../spinner/Spinner';
@@ -11,46 +11,35 @@ import './heroRandom.scss';
 
 
 const HeroRandom = () => {
-   const [hero, setHero] = useState(null);
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState(false);
+   const [hero, setHero] = useState({});
 
-
-
-   const marvelService = new MarvelService();
+   const { loading, error, getHero, clearError } = useMarvelService();
 
    useEffect(() => {
       updateHero();
-      const timerId = setInterval(updateHero, 60000);
+      const timerId = setInterval(updateHero, 6000000);
       return () => {
          clearInterval(timerId)
       }
    }, [])
 
-   const onError = () => {
-      setLoading(false);
-      setError(true)
 
-   }
 
    const onHeroloaded = (hero) => {
       setHero(hero)
-      setLoading(false)
-      setError(false)
    }
 
-   const onHeroLoading = () => {
-      setLoading(true)
-      setError(false)
-   }
 
 
 
    const updateHero = () => {
-      const id = Math.floor(Math.random() * (1011334 - 1009742) + 1009742);
-      onHeroLoading()
-      marvelService
-         .getHero(id).then(onHeroloaded).catch(onError)
+      clearError();
+      const id = 1010334
+
+
+      // const id = Math.floor(Math.random() * (1011334 - 1009742) + 1009742);
+      getHero(id)
+         .then(onHeroloaded)
    }
 
    const errorMessage = error ? <ErrorMessage /> : null;
@@ -81,13 +70,13 @@ const View = ({ hero }) => {
 
    const { name, thumbnail, description, homepage, wiki } = hero;
    let contain = (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') ? 'randomhero__contain' : '';
-   let descrShorter = description.length >= 227 ? `${description.slice(0, 227)}...` : description
+   // let descrShorter = description?.length >= 227 ? `${description.slice(0, 227)}...` : description
    return (
       <div className="randomhero__block">
          <img src={thumbnail} alt="hero-img" className={`randomhero__img , ${contain}`} />
          <div className="randomhero__info">
             <p className='randomhero__name'>{name}</p>
-            <p className="randomhero__text">{descrShorter}</p>
+            <p className="randomhero__text">{description}</p>
             <div className="randomhero__btns">
                <a href={homepage} className="button button__main">
                   <div className="inner">Homepage</div>
