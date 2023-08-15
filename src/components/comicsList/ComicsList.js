@@ -17,7 +17,7 @@ const ComicsList = () => {
    const [offset, setOffset] = useState(400);
    const [newItemLoading, setnewItemLoading] = useState(false);
    const [toggle, setToggle] = useState(true);
-   const [limit, setLimit] = useState(getLocalInfo)
+   const [limit, setLimit] = useState(8)
 
 
    useEffect(() => {
@@ -38,7 +38,7 @@ const ComicsList = () => {
       setnewItemLoading(false)
       setToggle(false)
       setLimit(limit => limit + 8)
-      pushToLocal(limit)
+      // pushToLocal(limit)
    }
    //------------------------------ Далі без змін
    const itemRefs = useRef([]);
