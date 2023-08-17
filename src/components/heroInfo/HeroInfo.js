@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useMarvelService from '../../services/MarvelService';
+import { Link } from 'react-router-dom';
+
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -73,7 +75,8 @@ const View = ({ hero }) => {
             {comics.length > 0 ? null : 'There is no comics with this person'}
             {
                comics.slice(0, 10).map((item, i) => {
-                  return (<li key={i} className="hero__comics-item">{item.name}</li>)
+                  const comicsId = item.resourceURI.slice(43);
+                  return (<li key={i} className="hero__comics-item"><Link to={`/comics/${comicsId}`}>{item.name}</Link></li>)
                })
             }
          </ul>

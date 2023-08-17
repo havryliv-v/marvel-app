@@ -24,15 +24,23 @@ const useMarvelService = () => {
    const getAllComics = async (offset = _baseOffsetComics, limit = _limitComics) => {
       const res = await request(`${_apiBase}comics?limit=${limit}&offset=${offset}&${_apiKey}`);
       return res.data.results.map(_transformComics)
+
    }
 
+   const getComic = async (id) => {
+      const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
+      return _transformComics(res.data.results[0])
+   }
 
    const _transformComics = (comics) => {
       return {
          id: comics.id,
          title: comics.title,
+         description: comics.description || 'There is no description',
+         pages: comics.pageCount ? `${comics.pageCount} p.` : 'No information about number of pages',
          image: comics.images[0].path + '.' + comics.images[0].extension,
-         price: comics.prices[0].price
+         language: comics.textObjects.language || 'en-us',
+         price: (comics.prices[0].price === 0) ? 'Price unavaliable' : `${comics.prices[0].price} $`
       }
    }
 
@@ -48,7 +56,7 @@ const useMarvelService = () => {
          comics: hero.comics.items
       }
    }
-   return { loading, error, getAllHeroes, getHero, clearError, getAllComics }
+   return { loading, error, getAllHeroes, getHero, clearError, getAllComics, getComic }
 }
 
 export default useMarvelService;

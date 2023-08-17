@@ -1,16 +1,17 @@
-import './comicsList.scss';
+
+import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import useMarvelService from '../../services/MarvelService';
+// import { useLocaleStore } from '../../hooks/localStorage.hook';
+
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
-import { useEffect, useState, useRef } from 'react';
-import useMarvelService from '../../services/MarvelService';
-import { useLocaleStore } from '../../hooks/localStorage.hook';
-
-
+import './comicsList.scss';
 
 
 const ComicsList = () => {
-   const { getLocalInfo, pushToLocal } = useLocaleStore()
+   // const { getLocalInfo, pushToLocal } = useLocaleStore()
    const { loading, error, getAllComics } = useMarvelService()
 
    const [comicsList, setComicsList] = useState([])
@@ -55,7 +56,6 @@ const ComicsList = () => {
 
    function renderItems(arr) {
       const items = arr.map((item, i) => {
-         const price = item.price === 0 ? 'NOT AVAILABLE' : item.price
          return (
             <li className="comics__item"
                key={i}
@@ -67,11 +67,12 @@ const ComicsList = () => {
                   }
                }}
                ref={el => itemRefs.current[i] = el}
-               tabIndex={0}
-            >
-               <img src={item.image} alt="comics" className="comics__img" />
-               <h3 className="comics__title">{item.title}</h3>
-               <div className="comics__price">{price}</div>
+               tabIndex={0}>
+               <Link to={`/comics/${item.id}`}>
+                  <img src={item.image} alt="comics" className="comics__img" />
+                  <h3 className="comics__title">{item.title}</h3>
+                  <div className="comics__price">{item.price}</div>
+               </Link>
             </li>
          )
       })

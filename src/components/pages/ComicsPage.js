@@ -1,6 +1,6 @@
 import AppBanner from "../appBanner/AppBanner";
 import ComicsList from "../comicsList/ComicsList";
-import SingleComics from "../singleComics/SingleComics";
+import SingleComicsPage from "./SingleComicsPage";
 
 const ComicsPage = () => {
 
