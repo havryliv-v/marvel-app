@@ -21,6 +21,7 @@ const ComicsList = () => {
    const [limit, setLimit] = useState(8)
 
 
+
    useEffect(() => {
       onRequest(offset, true);
    }, [])
@@ -55,8 +56,10 @@ const ComicsList = () => {
 
 
    function renderItems(arr) {
+
       const items = arr.map((item, i) => {
          return (
+
             <li className="comics__item"
                key={i}
                onClick={() => itemFocus(i)}

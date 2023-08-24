@@ -23,6 +23,8 @@ const useMarvelService = () => {
 
    const getAllComics = async (offset = _baseOffsetComics, limit = _limitComics) => {
       const res = await request(`${_apiBase}comics?limit=${limit}&offset=${offset}&${_apiKey}`);
+      console.log(res)
+
       return res.data.results.map(_transformComics)
 
    }
@@ -38,7 +40,7 @@ const useMarvelService = () => {
          title: comics.title,
          description: comics.description || 'There is no description',
          pages: comics.pageCount ? `${comics.pageCount} p.` : 'No information about number of pages',
-         image: comics.images[0].path + '.' + comics.images[0].extension,
+         image: comics.thumbnail.path + '.' + comics.thumbnail.extension,
          language: comics.textObjects.language || 'en-us',
          price: (comics.prices[0].price === 0) ? 'Price unavaliable' : `${comics.prices[0].price} $`
       }

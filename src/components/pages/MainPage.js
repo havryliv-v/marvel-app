@@ -4,7 +4,6 @@ import HeroInfo from '../heroInfo/HeroInfo';
 import HeroList from '../heroList/HeroList';
 import HeroRandom from '../heroRandom/HeroRandom';
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
-import Selector from "../selector/Selector";
 
 
 import decoration from '../../resources/img/vision.png';
@@ -26,7 +25,6 @@ const MainPage = () => {
             <ErrorBoundary>
                <HeroInfo heroId={selectedHero} />
             </ErrorBoundary>
-            {/* <Selector /> */}
          </div>
          <img className="bg-decoration" src={decoration} alt="vision" />
 

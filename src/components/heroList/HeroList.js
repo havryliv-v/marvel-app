@@ -4,6 +4,8 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import useMarvelService from '../../services/MarvelService';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 
 
 
@@ -59,25 +61,29 @@ const HeroList = (props) => {
 
       const items = arr.map((item, i) => {
          return (
-            <li className="hero__item"
-               key={item.id}
-               onClick={() => { props.onHeroSelected(item.id); itemFocus(i) }}
-               onKeyDown={(e) => {
-                  if (e.key === ' ' || e.key === 'Enter') {
-                     e.preventDefault();
-                     props.onHeroSelected(item.id);
-                     itemFocus(i);
-                  }
-               }}
-               ref={el => itemRefs.current[i] = el}
-               tabIndex={0}>
-               <img src={item.thumbnail} alt="" className="hero__img" />
-               <div className="hero__name">{item.name}</div>
-            </li >
+            <CSSTransition key={item.id} timeout={700} classNames="hero__item">
+               <li className="hero__item"
+                  key={item.id}
+                  onClick={() => { props.onHeroSelected(item.id); itemFocus(i) }}
+                  onKeyDown={(e) => {
+                     if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        props.onHeroSelected(item.id);
+                        itemFocus(i);
+                     }
+                  }}
+                  ref={el => itemRefs.current[i] = el}
+                  tabIndex={0}>
+                  <img src={item.thumbnail} alt="" className="hero__img" />
+                  <div className="hero__name">{item.name}</div>
+               </li >
+            </CSSTransition>
          )
       })
       return (<ul className="hero__list" >
-         {items}
+         <TransitionGroup component={null}>
+            {items}
+         </TransitionGroup>
       </ul >)
    }
 
@@ -86,19 +92,19 @@ const HeroList = (props) => {
    const items = renderItems(list);
    const errorMessage = error ? <ErrorMessage /> : null;
    const spinner = loading && !newItemLoading ? <Spinner /> : null;
-   const alternativeStyle = items ? {} : { 'justifyContent': 'flex-end' };
-   const alternativeButton = items ? {} : { 'marginTop': '70%' }
    const hiddenButton = { 'display': heroesEnded ? 'none' : 'block' }
 
    return (
-      <div className='hero' style={alternativeStyle}>
-         {errorMessage}
-         {spinner}
-         {items}
+      <div className='hero' >
+         <div className="hero__wrapper">
+            {errorMessage}
+            {spinner}
+            {items}
+         </div>
          <button
             className="button button__main button__long"
             disabled={newItemLoading}
-            style={{ ...alternativeButton, ...hiddenButton }}
+            style={{ hiddenButton }}
             onClick={() => onRequest(offset)}>
             <div className="inner">load more</div>
          </button>

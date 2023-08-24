@@ -30,6 +30,7 @@
          box-shadow: 0 5px 20px #C3BFBD;
       }
 
+
       &_selected {
          transform: translateY(-8px);
          box-shadow: 0 5px 20px $main-color;
@@ -38,6 +39,24 @@
             box-shadow: 0 5px 20px $main-color;
          }
       }
+   }
+
+   .my-item-enter {
+      opacity: 0;
+   }
+
+   .my-item-enter-active {
+      opacity: 1;
+      transition: opacity 200ms;
+   }
+
+   .my-item-exit {
+      opacity: 1;
+   }
+
+   .my-item-exit-active {
+      opacity: 0;
+      transition: opacity 200ms;
    }
 
    &__img {
