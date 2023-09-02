@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import useMarvelService from '../../services/MarvelService';
 
 import mjolnir from '../../resources/img/mjolnir.png';
@@ -8,11 +7,8 @@ import ErrorMessage from '../errorMessage/ErrorMessage'
 
 import './heroRandom.scss';
 
-
-
 const HeroRandom = () => {
    const [hero, setHero] = useState({});
-
    const { loading, error, getHero, clearError } = useMarvelService();
 
    useEffect(() => {
@@ -23,23 +19,18 @@ const HeroRandom = () => {
       }
    }, [])
 
-
-
    const onHeroloaded = (hero) => {
       setHero(hero)
    }
 
-
-
-
    const updateHero = () => {
       clearError();
-      const id = 1010334
-
-
-      // const id = Math.floor(Math.random() * (1011334 - 1009742) + 1009742);
+      const id = Math.floor(Math.random() * (1011334 - 1009742) + 1009742);
       getHero(id)
          .then(onHeroloaded)
+         .catch((error) => {
+            console.error(error);
+         });
    }
 
    const errorMessage = error ? <ErrorMessage /> : null;
@@ -60,7 +51,6 @@ const HeroRandom = () => {
                <div className="inner" >try it</div>
             </button>
             <img src={mjolnir} alt="hero-img" className="randomhero__decor" />
-
          </div>
       </div>
    )
@@ -69,14 +59,14 @@ const HeroRandom = () => {
 const View = ({ hero }) => {
 
    const { name, thumbnail, description, homepage, wiki } = hero;
-   let contain = (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') ? 'randomhero__contain' : '';
-   // let descrShorter = description?.length >= 227 ? `${description.slice(0, 227)}...` : description
+   const contain = (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') ? 'randomhero__contain' : '';
+   const descrShorter = description?.length >= 227 ? `${description.slice(0, 227)}...` : description
    return (
       <div className="randomhero__block">
          <img src={thumbnail} alt="hero-img" className={`randomhero__img , ${contain}`} />
          <div className="randomhero__info">
             <p className='randomhero__name'>{name}</p>
-            <p className="randomhero__text">{description}</p>
+            <p className="randomhero__text">{descrShorter}</p>
             <div className="randomhero__btns">
                <a href={homepage} className="button button__main">
                   <div className="inner">Homepage</div>

@@ -5,13 +5,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Spinner from '../spinner/Spinner'
 
 const Page404 = lazy(() => import('../pages/404'));
-const MainPage = lazy(() => import('../pages/MainPage'));
+const MainPage = lazy(() => import('../pages/mainPage/MainPage'));
 const ComicsPage = lazy(() => import('../pages/ComicsPage'));
-const SingleComicsPage = lazy(() => import('../pages/SingleComicsPage'));
-
+const SingleComicsPage = lazy(() => import('../pages/singleComicLayout/SingleComicsPage'));
+const SingleHeroPage = lazy(() => import('../pages/singleHeroLayout/SingleHeroPage'));
+const SinglePage = lazy(() => import('../pages/SinglePage'));
 
 const App = () => {
-
 
    return (
       <Router>
@@ -22,12 +22,11 @@ const App = () => {
                   <Routes>
                      <Route path="/" element={<MainPage />} />
                      <Route path="/comics" element={<ComicsPage />} />
-                     <Route path="/comics/:comicId" element={<SingleComicsPage />} />
+                     <Route path="/comics/:id" element={<SinglePage Component={SingleComicsPage} dataType='comic' />} />
+                     <Route path="/heroes/:id" element={<SinglePage Component={SingleHeroPage} dataType='hero' />} />
                      <Route path="*" element={<Page404 />} />
                   </Routes>
                </Suspense>
-
-
             </main>
          </div>
       </Router>

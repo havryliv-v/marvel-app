@@ -6,16 +6,12 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-
-
-
 const HeroList = (props) => {
 
    const [list, setList] = useState([]);
    const [newItemLoading, setnewItemLoading] = useState(false);
    const [offset, setOffset] = useState(440);
    const [heroesEnded, setHeroesEnded] = useState(false);
-
    const { loading, error, getAllHeroes } = useMarvelService();
 
    useEffect(() => {
@@ -24,12 +20,8 @@ const HeroList = (props) => {
 
    const onRequest = (offset, initial) => {
       initial ? setnewItemLoading(false) : setnewItemLoading(true)
-
-
       getAllHeroes(offset)
          .then(onHeroListLoaded)
-
-
    }
 
    const onHeroListLoaded = (newList) => {
@@ -37,8 +29,6 @@ const HeroList = (props) => {
       if (newList.length < 9) {
          ended = true;
       }
-
-
       setList(list => [...list, ...newList])
       setnewItemLoading(newItemLoading => false)
       setOffset(offset => offset + 9)
@@ -47,7 +37,6 @@ const HeroList = (props) => {
    }
 
    const itemRefs = useRef([]);
-
 
    const itemFocus = (id) => {
       itemRefs.current.forEach(item => {
@@ -86,8 +75,6 @@ const HeroList = (props) => {
          </TransitionGroup>
       </ul >)
    }
-
-
 
    const items = renderItems(list);
    const errorMessage = error ? <ErrorMessage /> : null;

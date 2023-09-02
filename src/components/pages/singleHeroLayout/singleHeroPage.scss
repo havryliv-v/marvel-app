@@ -1,0 +1,41 @@
+.singleHero {
+   &__inner {
+      margin-top: 50px;
+      display: flex;
+   }
+
+   &__img {
+      margin-right: 50px;
+      width: 293px;
+      height: 293px;
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+   }
+
+   &__name {
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+   }
+
+   &__descr {
+      font-size: 18px;
+      font-weight: 400;
+      margin-top: 25px;
+      width: 550px;
+   }
+
+   &__back {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: 700;
+      align-self: flex-start;
+   }
+
+   &__btns {
+      margin-top: 25px;
+
+      .button:first-child {
+         margin-right: 30px;
+      }
+   }
+}

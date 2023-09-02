@@ -9,7 +9,6 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './comicsList.scss';
 
-
 const ComicsList = () => {
    // const { getLocalInfo, pushToLocal } = useLocaleStore()
    const { loading, error, getAllComics } = useMarvelService()
@@ -19,8 +18,6 @@ const ComicsList = () => {
    const [newItemLoading, setnewItemLoading] = useState(false);
    const [toggle, setToggle] = useState(true);
    const [limit, setLimit] = useState(8)
-
-
 
    useEffect(() => {
       onRequest(offset, true);
@@ -34,7 +31,6 @@ const ComicsList = () => {
 
    const onComicsListLoaded = (newRes) => {
 
-
       setComicsList(comicsList => [...comicsList, ...newRes])
       setOffset(offset => offset + 8)
       setnewItemLoading(false)
@@ -42,7 +38,6 @@ const ComicsList = () => {
       setLimit(limit => limit + 8)
       // pushToLocal(limit)
    }
-   //------------------------------ Далі без змін
    const itemRefs = useRef([]);
 
    const itemFocus = (id) => {
@@ -54,12 +49,10 @@ const ComicsList = () => {
 
    }
 
-
    function renderItems(arr) {
 
       const items = arr.map((item, i) => {
          return (
-
             <li className="comics__item"
                key={i}
                onClick={() => itemFocus(i)}

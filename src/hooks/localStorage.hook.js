@@ -4,7 +4,6 @@ export const useLocaleStore = () => {
    const pushToLocal = (currentLimit) => {
 
       if (currentLimit === 8 || currentLimit <= (getLocalInfo)) {
-
          return
       } else {
          localStorage.setItem('comics', currentLimit)

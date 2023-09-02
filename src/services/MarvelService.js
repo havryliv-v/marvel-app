@@ -11,22 +11,25 @@ const useMarvelService = () => {
    const _baseOffsetComics = 400;
    const _limitComics = 8;
 
-
    const getAllHeroes = async (offset = _baseOffsetHero, limit = _limitHero) => {
       const res = await request(`${_apiBase}characters?limit=${limit}&offset=${offset}&${_apiKey}`);
       return res.data.results.map(_transformHero)
    }
+
    const getHero = async (id) => {
       const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
+      return _transformHero(res.data.results[0])
+   }
+
+   const getHeroByName = async (name) => {
+      const res = await request(`https://gateway.marvel.com:443/v1/public/characters?name=${name}&${_apiKey}`);
       return _transformHero(res.data.results[0])
    }
 
    const getAllComics = async (offset = _baseOffsetComics, limit = _limitComics) => {
       const res = await request(`${_apiBase}comics?limit=${limit}&offset=${offset}&${_apiKey}`);
       console.log(res)
-
       return res.data.results.map(_transformComics)
-
    }
 
    const getComic = async (id) => {
@@ -46,7 +49,6 @@ const useMarvelService = () => {
       }
    }
 
-
    const _transformHero = (hero) => {
       return {
          id: hero.id,
@@ -58,7 +60,7 @@ const useMarvelService = () => {
          comics: hero.comics.items
       }
    }
-   return { loading, error, getAllHeroes, getHero, clearError, getAllComics, getComic }
+   return { loading, error, getAllHeroes, getHero, getHeroByName, clearError, getAllComics, getComic }
 }
 
 export default useMarvelService;

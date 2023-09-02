@@ -1,11 +1,12 @@
 .hero {
    &__info {
       width: 425px;
+      min-height: 292px;
       margin-top: 51px;
 
-      position: sticky;
-      top: 10px;
-      z-index: 5;
+      // position: sticky;
+      // top: 10px;
+      // z-index: 5;
 
       &-inner {
          padding: 25px;

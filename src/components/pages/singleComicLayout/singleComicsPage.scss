@@ -1,4 +1,4 @@
-@import '../../style/variables.scss';
+@import '../../../style/variables.scss';
 
 .single {
    margin-top: 50px;
@@ -38,8 +38,7 @@
 
    &__back {
       margin-left: auto;
-      font-size: 18px;
-      font-weight: 700;
+
       align-self: flex-start;
    }
 }

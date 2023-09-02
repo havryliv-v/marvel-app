@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import useMarvelService from '../../services/MarvelService';
 import { Link } from 'react-router-dom';
 
-
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Selector from '../selector/Selector';
@@ -12,15 +11,11 @@ import './heroInfo.scss';
 const HeroInfo = (props) => {
 
    const [hero, setHero] = useState(null);
-
-
    const { error, loading, getHero, clearError } = useMarvelService();
 
    useEffect(() => {
       updateHero();
    }, [props.heroId])
-
-
 
    const updateHero = () => {
       const { heroId } = props;
@@ -53,7 +48,6 @@ const HeroInfo = (props) => {
 const View = ({ hero }) => {
    const { name, description, thumbnail, homepage, wiki, comics } = hero
    return (
-
       <div className="hero__info-inner">
          <div className="hero__basic">
             <img src={thumbnail} alt={name} />
@@ -74,7 +68,7 @@ const View = ({ hero }) => {
          <ul className="hero__comics-list">
             {comics.length > 0 ? null : 'There is no comics with this person'}
             {
-               comics.slice(0, 10).map((item, i) => {
+               comics.slice(0, 8).map((item, i) => {
                   const comicsId = item.resourceURI.slice(43);
                   return (<li key={i} className="hero__comics-item"><Link to={`/comics/${comicsId}`}>{item.name}</Link></li>)
                })
@@ -84,8 +78,5 @@ const View = ({ hero }) => {
 
    )
 }
-
-
-
 
 export default HeroInfo;

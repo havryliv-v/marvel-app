@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import HeroInfo from '../heroInfo/HeroInfo';
-import HeroList from '../heroList/HeroList';
-import HeroRandom from '../heroRandom/HeroRandom';
-import ErrorBoundary from "../errorBoundary/ErrorBoundary";
+import HeroInfo from '../../heroInfo/HeroInfo';
+import HeroList from '../../heroList/HeroList';
+import HeroRandom from '../../heroRandom/HeroRandom';
+import SearchHero from '../../searchHero/SearchHero';
+import decoration from '../../../resources/img/vision.png';
 
-
-import decoration from '../../resources/img/vision.png';
+import './mainPage.scss'
 
 const MainPage = () => {
 
@@ -17,17 +17,15 @@ const MainPage = () => {
    }
    return (
       <>
-         <ErrorBoundary>
-            <HeroRandom />
-         </ErrorBoundary>
+         <HeroRandom />
          <div className="hero__content">
             <HeroList onHeroSelected={onHeroSelected} />
-            <ErrorBoundary>
+            <div className="hero__side">
                <HeroInfo heroId={selectedHero} />
-            </ErrorBoundary>
+               <SearchHero />
+            </div>
          </div>
          <img className="bg-decoration" src={decoration} alt="vision" />
-
       </>
    )
 }

@@ -1,6 +1,5 @@
 import './appBanner.scss';
 
-
 import avengers from '../../resources/img/Avengers.png';
 import avengers_logo from '../../resources/img/Avengers_logo.png';
 
