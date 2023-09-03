@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useHttp } from "../hooks/http.hook";
 
 const useMarvelService = () => {
@@ -28,7 +27,6 @@ const useMarvelService = () => {
 
    const getAllComics = async (offset = _baseOffsetComics, limit = _limitComics) => {
       const res = await request(`${_apiBase}comics?limit=${limit}&offset=${offset}&${_apiKey}`);
-      console.log(res)
       return res.data.results.map(_transformComics)
    }
 

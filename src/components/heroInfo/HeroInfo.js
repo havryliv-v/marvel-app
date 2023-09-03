@@ -12,7 +12,7 @@ import './heroInfo.scss';
 const HeroInfo = (props) => {
 
    const [hero, setHero] = useState(null);
-   const { error, loading, getHero, clearError, process, setProcess } = useMarvelService();
+   const { getHero, clearError, process, setProcess } = useMarvelService();
 
    useEffect(() => {
       updateHero();

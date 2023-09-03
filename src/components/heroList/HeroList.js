@@ -1,5 +1,5 @@
 import './heroList.scss';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
@@ -10,16 +10,12 @@ const setContent = (process, Component, newItemLoading) => {
    switch (process) {
       case 'waiting':
          return < Spinner />;
-         break;
       case 'loading':
          return newItemLoading ? <Component /> : <Spinner />;
-         break;
       case 'confirmed':
          return <Component />;
-         break;
       case 'error':
          return <ErrorMessage />;
-         break;
       default:
          throw new Error('Unexpected process state')
    }
@@ -59,10 +55,8 @@ const HeroList = (props) => {
    const itemRefs = useRef([]);
 
    const itemFocus = (id) => {
-      itemRefs.current.forEach(item => {
-         item.classList.remove('hero__item_selected')
-      });
-      itemRefs.current[id].classList.add('hero__item_selected');
+      itemRefs.current.forEach(item => item.classList.remove('hero__item_selected'));
+      itemRefs.current[id].classList.add('hero__item_selected')
       itemRefs.current[id].focus();
    }
 
@@ -73,7 +67,10 @@ const HeroList = (props) => {
             <CSSTransition key={item.id} timeout={700} classNames="hero__item">
                <li className="hero__item"
                   key={item.id}
-                  onClick={() => { props.onHeroSelected(item.id); itemFocus(i) }}
+                  onClick={() => {
+                     props.onHeroSelected(item.id);
+                     itemFocus(i)
+                  }}
                   onKeyDown={(e) => {
                      if (e.key === ' ' || e.key === 'Enter') {
                         e.preventDefault();
@@ -98,10 +95,14 @@ const HeroList = (props) => {
 
    const hiddenButton = { 'display': heroesEnded ? 'none' : 'block' }
 
+
+   const elements = useMemo(() => {
+      return setContent(process, () => renderItems(list), newItemLoading)
+   }, [process]);
    return (
       <div className='hero' >
          <div className="hero__wrapper">
-            {setContent(process, () => renderItems(list), newItemLoading)}
+            {elements}
          </div>
          <button
             className="button button__main button__long"

@@ -16,6 +16,8 @@ const MainPage = () => {
    const onHeroSelected = (id) => {
       setHero(id);
    }
+
+
    return (
       <>
          <Helmet>

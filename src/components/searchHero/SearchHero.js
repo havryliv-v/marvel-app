@@ -6,6 +6,17 @@ import useMarvelService from '../../services/MarvelService';
 import './searchHero.scss'
 import { useState } from 'react';
 
+const setContent = (status, View, heroName) => {
+   switch (status) {
+      case 'empty':
+         return 'This field is required';
+      case 'error':
+         return 'The character was not found. Check the name and try again';
+      case 'found':
+         return <View heroName={heroName} />
+   }
+}
+
 const SearchHero = () => {
    const { getHeroByName, process, setProcess } = useMarvelService();
    const [heroName, setHeroName] = useState('')
@@ -22,7 +33,8 @@ const SearchHero = () => {
       })
          .then(() => setProcess('confirmed'))
          .catch((error) => {
-            setStatus('error')
+            setStatus('error');
+            setProcess('error')
          })
 
    }
@@ -31,11 +43,6 @@ const SearchHero = () => {
       setHeroName(e.target.value)
       setStatus('');
    }
-
-   const altColor = (status === 'found') ? 'form__green' : null;
-   const found = (status === 'found') ? <View heroName={heroName} /> : null;
-   const notFound = (status === 'error') ? 'The character was not found. Check the name and try again' : null;
-   const empty = (status === 'empty') ? 'This field is required' : null;
 
    return (
       <Formik
@@ -60,10 +67,8 @@ const SearchHero = () => {
                   <div className="inner" >FIND</div>
                </button>
             </div>
-            <div className={`form__status ${altColor}`}>
-               {found}
-               {notFound}
-               {empty}
+            <div className={`form__status ${(status === 'found') ? 'form__green' : null}`}>
+               {setContent(status, View, heroName)}
             </div>
          </Form>
       </Formik>
