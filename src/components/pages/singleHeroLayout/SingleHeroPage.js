@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
+
 
 import './singleHeroPage.scss';
 
@@ -8,6 +10,12 @@ const SingleHeroPage = ({ data }) => {
 
    return (
       <div className="singleHero__page">
+         <Helmet>
+            <meta
+               name="description"
+               content={`${name} - hero`} />
+            <title>{`Marvel hero - ${name}`}</title>
+         </Helmet>
          <div className="singleHero__inner">
             <img src={thumbnail} alt="hero" className="singleHero__img" />
             <div className="singleHero__content">

@@ -7,7 +7,7 @@ import './searchHero.scss'
 import { useState } from 'react';
 
 const SearchHero = () => {
-   const { getHeroByName } = useMarvelService();
+   const { getHeroByName, process, setProcess } = useMarvelService();
    const [heroName, setHeroName] = useState('')
    const [status, setStatus] = useState('')
 
@@ -20,13 +20,14 @@ const SearchHero = () => {
             setStatus('found')
          }
       })
+         .then(() => setProcess('confirmed'))
          .catch((error) => {
             setStatus('error')
-         });
+         })
+
    }
 
    const handleInput = (e) => {
-      console.log('changing');
       setHeroName(e.target.value)
       setStatus('');
    }
@@ -40,7 +41,9 @@ const SearchHero = () => {
       <Formik
          initialValues={{
             hero: ''
-         }}>
+         }}
+         onSubmit={onRequest}
+      >
          <Form className='form'>
             <h2 className='form__title'>Or find a character by name:</h2>
             <div className="form__main">
@@ -53,7 +56,7 @@ const SearchHero = () => {
                   onChange={e => { handleInput(e) }}
                   value={heroName}
                />
-               <button className="button button__main" onClick={onRequest} type="button" >
+               <button className="button button__main" disabled={process === 'loading'} type="submit" >
                   <div className="inner" >FIND</div>
                </button>
             </div>
@@ -68,13 +71,14 @@ const SearchHero = () => {
 }
 
 const View = ({ heroName }) => {
-   console.log(heroName)
    return (
       <div className='view'>
          <p>There is! Visit {heroName} page?</p>
-         <Link to={`/heroes/${heroName}`}><button className="button button__secondary" type="button" >
-            <div className="inner" >TO PAGE</div>
-         </button></Link>
+         <Link to={`/heroes/${heroName}`}>
+            <button className="button button__secondary" type="button" >
+               <div className="inner" >TO PAGE</div>
+            </button>
+         </Link>
       </div >
    )
 }

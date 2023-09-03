@@ -6,13 +6,32 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+const setContent = (process, Component, newItemLoading) => {
+   switch (process) {
+      case 'waiting':
+         return < Spinner />;
+         break;
+      case 'loading':
+         return newItemLoading ? <Component /> : <Spinner />;
+         break;
+      case 'confirmed':
+         return <Component />;
+         break;
+      case 'error':
+         return <ErrorMessage />;
+         break;
+      default:
+         throw new Error('Unexpected process state')
+   }
+}
+
 const HeroList = (props) => {
 
    const [list, setList] = useState([]);
    const [newItemLoading, setnewItemLoading] = useState(false);
    const [offset, setOffset] = useState(440);
    const [heroesEnded, setHeroesEnded] = useState(false);
-   const { loading, error, getAllHeroes } = useMarvelService();
+   const { getAllHeroes, process, setProcess } = useMarvelService();
 
    useEffect(() => {
       onRequest(offset, true);
@@ -22,6 +41,7 @@ const HeroList = (props) => {
       initial ? setnewItemLoading(false) : setnewItemLoading(true)
       getAllHeroes(offset)
          .then(onHeroListLoaded)
+         .then(() => setProcess('confirmed'))
    }
 
    const onHeroListLoaded = (newList) => {
@@ -76,17 +96,12 @@ const HeroList = (props) => {
       </ul >)
    }
 
-   const items = renderItems(list);
-   const errorMessage = error ? <ErrorMessage /> : null;
-   const spinner = loading && !newItemLoading ? <Spinner /> : null;
    const hiddenButton = { 'display': heroesEnded ? 'none' : 'block' }
 
    return (
       <div className='hero' >
          <div className="hero__wrapper">
-            {errorMessage}
-            {spinner}
-            {items}
+            {setContent(process, () => renderItems(list), newItemLoading)}
          </div>
          <button
             className="button button__main button__long"

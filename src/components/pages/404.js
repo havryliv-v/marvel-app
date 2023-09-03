@@ -1,5 +1,7 @@
 import ErrorMessage from "../errorMessage/ErrorMessage"
 import { Link, useNavigate } from "react-router-dom"
+import { Helmet } from 'react-helmet'
+
 
 const Page404 = () => {
    console.log(document.referrer)
@@ -12,6 +14,12 @@ const Page404 = () => {
    };
    return (
       <div>
+         <Helmet>
+            <meta
+               name="description"
+               content={`page with error`} />
+            <title>{`Error 404`}</title>
+         </Helmet>
          <ErrorMessage />
          <p style={{ 'textAlign': 'center', 'fontWeight': 'bold', 'fontSize': '24px' }}>This page doesn’t exist</p>
          <Link

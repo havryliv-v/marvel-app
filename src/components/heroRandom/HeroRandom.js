@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import useMarvelService from '../../services/MarvelService';
 
 import mjolnir from '../../resources/img/mjolnir.png';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage'
+import setContent from '../../utils/setContent';
+
 
 import './heroRandom.scss';
 
 const HeroRandom = () => {
    const [hero, setHero] = useState({});
-   const { loading, error, getHero, clearError } = useMarvelService();
+   const { getHero, clearError, process, setProcess } = useMarvelService();
 
    useEffect(() => {
       updateHero();
@@ -28,20 +28,16 @@ const HeroRandom = () => {
       const id = Math.floor(Math.random() * (1011334 - 1009742) + 1009742);
       getHero(id)
          .then(onHeroloaded)
+         .then(() => setProcess('confirmed'))
          .catch((error) => {
             console.error(error);
          });
    }
 
-   const errorMessage = error ? <ErrorMessage /> : null;
-   const spinner = loading ? <Spinner /> : null;
-   const content = !(loading || error) ? <View hero={hero} /> : null;
 
    return (
       <div className='randomhero'>
-         {errorMessage}
-         {spinner}
-         {content}
+         {setContent(process, View, hero)}
          <div className="randomhero__static">
             <p className="randomhero__title">Random character for today! <br />
                Do you want to get to know him better?</p>
@@ -56,9 +52,9 @@ const HeroRandom = () => {
    )
 }
 
-const View = ({ hero }) => {
+const View = ({ data }) => {
 
-   const { name, thumbnail, description, homepage, wiki } = hero;
+   const { name, thumbnail, description, homepage, wiki } = data;
    const contain = (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') ? 'randomhero__contain' : '';
    const descrShorter = description?.length >= 227 ? `${description.slice(0, 227)}...` : description
    return (

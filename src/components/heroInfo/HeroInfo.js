@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import useMarvelService from '../../services/MarvelService';
 import { Link } from 'react-router-dom';
 
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Selector from '../selector/Selector';
+import setContent from '../../utils/setContent';
 
 import './heroInfo.scss';
+
+
+
 
 const HeroInfo = (props) => {
 
    const [hero, setHero] = useState(null);
-   const { error, loading, getHero, clearError } = useMarvelService();
+   const { error, loading, getHero, clearError, process, setProcess } = useMarvelService();
 
    useEffect(() => {
       updateHero();
@@ -25,28 +26,22 @@ const HeroInfo = (props) => {
       clearError()
       getHero(heroId)
          .then(onHeroloaded)
+         .then(() => setProcess('confirmed'))
    }
 
    const onHeroloaded = (hero) => {
       setHero(hero)
    }
 
-   const selector = hero || loading || error ? null : <Selector />
-   const errorMessage = error ? <ErrorMessage /> : null;
-   const spinner = loading ? <Spinner /> : null;
-   const content = !(loading || error || !hero) ? <View hero={hero} /> : null;
    return (
       <div className="hero__info">
-         {selector}
-         {errorMessage}
-         {spinner}
-         {content}
+         {setContent(process, View, hero)}
       </div>
    )
 }
 
-const View = ({ hero }) => {
-   const { name, description, thumbnail, homepage, wiki, comics } = hero
+const View = ({ data }) => {
+   const { name, description, thumbnail, homepage, wiki, comics } = data
    return (
       <div className="hero__info-inner">
          <div className="hero__basic">

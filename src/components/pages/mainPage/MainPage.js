@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet'
 
 import HeroInfo from '../../heroInfo/HeroInfo';
 import HeroList from '../../heroList/HeroList';
@@ -17,6 +18,12 @@ const MainPage = () => {
    }
    return (
       <>
+         <Helmet>
+            <meta
+               name="description"
+               content="Marvel information portal" />
+            <title>Marvel information portal</title>
+         </Helmet>
          <HeroRandom />
          <div className="hero__content">
             <HeroList onHeroSelected={onHeroSelected} />
